@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.lang.reflect.Array;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -16,8 +17,8 @@ public class MedicalRecord {
 
     private Date birthdate;
 
-    private Array medications;
+    private List<String> medications;
 
-    private Array allergies;
+    private List<String> allergies;
 
 }
