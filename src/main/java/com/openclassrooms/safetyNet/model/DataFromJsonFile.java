@@ -7,11 +7,11 @@ import java.util.List;
 @Data
 public class DataFromJsonFile {
 
-    private List<FireStation> fireStations;
-
-    private List<MedicalRecord> medicalRecords;
-
     private List<Person> persons;
+
+    private List<FireStation> firestations;
+
+    private List<MedicalRecord> medicalrecords;
 
     public DataFromJsonFile() {
 
