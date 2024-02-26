@@ -4,13 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import lombok.Data;
 
-import java.lang.reflect.Array;
 import java.util.Date;
 import java.util.List;
 
 @Data
 @Entity
-public class MedicalRecord {
+public class Medicalrecord {
 
     private String firstName;
 

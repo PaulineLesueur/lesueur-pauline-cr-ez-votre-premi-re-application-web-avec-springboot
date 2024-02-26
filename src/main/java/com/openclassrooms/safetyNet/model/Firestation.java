@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class FireStation {
+public class Firestation {
 
     private String address;
 
