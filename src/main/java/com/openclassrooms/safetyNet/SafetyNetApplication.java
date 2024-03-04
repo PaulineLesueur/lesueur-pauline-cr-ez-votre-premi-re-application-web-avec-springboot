@@ -1,26 +1,23 @@
 package com.openclassrooms.safetyNet;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.safetyNet.model.DataFromJsonFile;
-import com.openclassrooms.safetyNet.repository.FirestationRepository;
-import com.openclassrooms.safetyNet.repository.MedicalrecordRepository;
-import com.openclassrooms.safetyNet.repository.PersonRepository;
+import com.openclassrooms.safetyNet.service.FirestationService;
+import com.openclassrooms.safetyNet.service.MedicalrecordService;
+import com.openclassrooms.safetyNet.service.PersonService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
-@SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
-@ComponentScan(basePackages = "com.openclassrooms.safetyNet.*")
-@EntityScan("com.openclassrooms.safetyNet.*")
-@EnableJpaRepositories(basePackages = "com.openclassrooms.safetyNet.repository")
+@SpringBootApplication()
 public class SafetyNetApplication {
 
 	public static void main(String[] args) {
@@ -28,24 +25,22 @@ public class SafetyNetApplication {
 	}
 
 	@Bean
-	CommandLineRunner runner(FirestationRepository fireStationRepository, MedicalrecordRepository medicalRecordRepository, PersonRepository personRepository) {
+	CommandLineRunner runner(FirestationService firestationService, MedicalrecordService medicalrecordService, PersonService personService) {
 		return args -> {
 
 			ObjectMapper mapper =  new ObjectMapper();
-
-			DataFromJsonFile data = mapper.readValue(new File("src/main/resources/data.json"), DataFromJsonFile.class);
-			fireStationRepository.saveAll(data.getFirestations());
-			medicalRecordRepository.saveAll(data.getMedicalrecords());
-			personRepository.saveAll(data.getPersons());
+			TypeReference<DataFromJsonFile> typeReference = new TypeReference<DataFromJsonFile>() {};
+			InputStream inputStream = TypeReference.class.getResourceAsStream("/data.json");
+			try {
+				DataFromJsonFile dataFromJsonFile = mapper.readValue(inputStream, typeReference);
+				personService.save(dataFromJsonFile.getPersons());
+				firestationService.save(dataFromJsonFile.getFirestations());
+				medicalrecordService.save(dataFromJsonFile.getMedicalrecords());
+			} catch (IOException e){
+				System.out.println("Unable to save data: " + e.getMessage());
+			}
 
 		};
-	}
-
-	// Manual configuration to JPA, fix error "required bean named entityManagerFactory" //
-	@Bean(name = "entityManagerFactory")
-	public LocalSessionFactoryBean sessionFactory() {
-		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-		return sessionFactory;
 	}
 
 }

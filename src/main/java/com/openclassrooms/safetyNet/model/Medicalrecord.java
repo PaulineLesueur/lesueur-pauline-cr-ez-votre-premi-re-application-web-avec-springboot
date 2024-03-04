@@ -1,7 +1,7 @@
 package com.openclassrooms.safetyNet.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,7 +9,12 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name = "medicalrecords")
 public class Medicalrecord {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String firstName;
 
