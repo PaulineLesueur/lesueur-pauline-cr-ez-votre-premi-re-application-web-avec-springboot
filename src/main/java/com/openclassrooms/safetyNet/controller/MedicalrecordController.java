@@ -51,4 +51,9 @@ public class MedicalrecordController {
         }
     }
 
+    @DeleteMapping("/medicalrecord/{lastname}/{firstname}")
+    public void deleteMedicalrecord(@PathVariable("lastname") String lastname, @PathVariable("firstname") String firstname) {
+        medicalrecordService.deleteMedicalrecord(lastname, firstname);
+    }
+
 }

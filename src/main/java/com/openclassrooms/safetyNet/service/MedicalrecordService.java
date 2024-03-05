@@ -32,4 +32,8 @@ public class MedicalrecordService {
         Medicalrecord savedMedicalRecord = medicalRecordRepository.save(medicalrecord);
         return savedMedicalRecord;
     }
+
+    public void deleteMedicalrecord(String lastname, String firstname) {
+        medicalRecordRepository.delete(lastname, firstname);
+    }
 }
