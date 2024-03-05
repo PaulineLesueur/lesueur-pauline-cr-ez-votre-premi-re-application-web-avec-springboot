@@ -14,6 +14,6 @@ public class Firestation {
 
     private String address;
 
-    private int station;
+    private Integer station;
 
 }
