@@ -2,6 +2,7 @@ package com.openclassrooms.safetyNet.controller;
 
 import com.openclassrooms.safetyNet.model.Medicalrecord;
 import com.openclassrooms.safetyNet.service.MedicalrecordService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,8 +52,9 @@ public class MedicalrecordController {
         }
     }
 
-    @DeleteMapping("/medicalrecord/{lastname}/{firstname}")
-    public void deleteMedicalrecord(@PathVariable("lastname") String lastname, @PathVariable("firstname") String firstname) {
+    @DeleteMapping("/medicalrecord")
+    @Transactional
+    public void deleteMedicalrecord(@RequestParam("lastname") String lastname, @RequestParam("firstname") String firstname) {
         medicalrecordService.deleteMedicalrecord(lastname, firstname);
     }
 

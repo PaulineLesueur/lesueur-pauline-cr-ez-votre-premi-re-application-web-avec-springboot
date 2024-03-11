@@ -2,7 +2,9 @@ package com.openclassrooms.safetyNet.controller;
 
 import com.openclassrooms.safetyNet.model.Person;
 import com.openclassrooms.safetyNet.service.PersonService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
@@ -62,8 +64,9 @@ public class PersonController {
         }
     }
 
-    @DeleteMapping("/person/{lastname}/{firstname}")
-    public void deletePerson(@PathVariable("lastname") String lastname, @PathVariable("firstname") String firstname) {
+    @DeleteMapping("/person")
+    @Transactional
+    public void deletePerson(@RequestParam("lastname") String lastname, @RequestParam("firstname") String firstname) {
         personService.deletePerson(lastname, firstname);
     }
 

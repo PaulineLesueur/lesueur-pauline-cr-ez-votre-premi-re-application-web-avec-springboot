@@ -34,11 +34,11 @@ public class FirestationService {
         return savedFirestation;
     }
 
-    public void deleteFirestationByStationNumber(Integer station) {
+    /*public void deleteFirestationByStationNumber(Integer station) {
         fireStationRepository.deleteByStationNumber(station);
-    }
+    }*/
 
-    public void deleteFireStationByAdress(String adress) {
-        fireStationRepository.deleteByAdress(adress);
+    public void deleteFireStationByAddress(String adress) {
+        fireStationRepository.deleteByAddress(adress);
     }
 }

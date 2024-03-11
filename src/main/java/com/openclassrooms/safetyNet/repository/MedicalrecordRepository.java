@@ -16,7 +16,7 @@ public interface MedicalrecordRepository extends CrudRepository<Medicalrecord, L
     Optional<Medicalrecord> findByLastnameAndFirstname(@Param("lastname") String lastname, @Param("firstname") String firstname);
 
     @Modifying
-    @Query(value = "DELETE m FROM Medicalrecord WHERE m.lastname = :lastname AND m.firstname = :firstname", nativeQuery = true)
+    @Query(value = "DELETE FROM Medicalrecords WHERE last_name = :lastname AND first_name = :firstname", nativeQuery = true)
     void delete(@Param("lastname") String lastname, @Param("firstname") String firstname);
 
 }

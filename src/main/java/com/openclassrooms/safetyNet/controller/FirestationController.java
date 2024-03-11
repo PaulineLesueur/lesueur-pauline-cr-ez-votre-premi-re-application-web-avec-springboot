@@ -3,6 +3,7 @@ package com.openclassrooms.safetyNet.controller;
 import com.openclassrooms.safetyNet.model.Firestation;
 import com.openclassrooms.safetyNet.model.Person;
 import com.openclassrooms.safetyNet.service.FirestationService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,19 +48,29 @@ public class FirestationController {
         }
     }
 
-    @DeleteMapping("/firestation/{station}")
-    public void deleteFirestationByStationNumber(@PathVariable("station") Integer station) {
+    /*@DeleteMapping("/firestation/{station}")
+    @Transactional
+    public void deleteFirestationByStationNumber(@RequestParam("station") Integer station) {
         firestationService.deleteFirestationByStationNumber(station);
     }
 
     @DeleteMapping("/firestation/{adress}")
-    public void deleteFireStationByAdress(@PathVariable("adress") String adress) {
+    @Transactional
+    public void deleteFireStationByAdress(@RequestParam("adress") String adress) {
         firestationService.deleteFireStationByAdress(adress);
+    }*/
+
+    @DeleteMapping("/firestation")
+    @Transactional
+    public void deleteFireStationByAddress(@RequestParam("address") String address) {
+        firestationService.deleteFireStationByAddress(address);
     }
 
     @GetMapping("/firestation")
     public Iterable<Person> getPersonByFirestationNumber(@RequestParam("stationNumber") Integer station) {
         return null;
     }
+
+
 
 }

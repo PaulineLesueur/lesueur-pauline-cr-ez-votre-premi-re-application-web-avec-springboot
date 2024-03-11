@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FirestationRepository extends CrudRepository<Firestation, Long> {
 
-    @Modifying
-    @Query(value = "DELETE f FROM Firestation f WHERE f.station = :station", nativeQuery = true)
-    void deleteByStationNumber(@Param("station") Integer station);
+    /*@Modifying
+    @Query(value = "DELETE FROM Firestation WHERE station = :station", nativeQuery = true)
+    void deleteByStationNumber(@Param("station") Integer station);*/
 
     @Modifying
-    @Query(value= "DELETE f FROM Firestation f WHERE f.adress = :adress", nativeQuery = true)
-    void deleteByAdress(@Param("adress") String adress);
+    @Query(value= "DELETE FROM Firestations WHERE address = :address", nativeQuery = true)
+    void deleteByAddress(@Param("address") String address);
 }
