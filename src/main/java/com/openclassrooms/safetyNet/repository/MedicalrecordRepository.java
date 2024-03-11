@@ -7,8 +7,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface MedicalrecordRepository extends CrudRepository<Medicalrecord, Long> {
+
+    @Query(value = "SELECT * FROM Medicalrecords WHERE last_name = :lastname AND first_name = :firstname", nativeQuery = true)
+    Optional<Medicalrecord> findByLastnameAndFirstname(@Param("lastname") String lastname, @Param("firstname") String firstname);
 
     @Modifying
     @Query(value = "DELETE m FROM Medicalrecord WHERE m.lastname = :lastname AND m.firstname = :firstname", nativeQuery = true)

@@ -20,8 +20,8 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    public Optional<Person> getPersonbyId(final Long id) {
-        return personRepository.findById(id);
+    public Optional<Person> getPersonbyLastnameFirstname(String lastname, String firstname) {
+        return personRepository.findByLastnameAndFirstname(lastname, firstname);
     }
 
     public void deletePerson(String lastname, String firstname) {

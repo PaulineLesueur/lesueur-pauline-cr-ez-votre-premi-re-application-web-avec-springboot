@@ -20,8 +20,8 @@ public class MedicalrecordService {
         return medicalRecordRepository.findAll();
     }
 
-    public Optional<Medicalrecord> getMedicalrecordById(final Long id) {
-        return medicalRecordRepository.findById(id);
+    public Optional<Medicalrecord> getMedicalrecordByLastnameFirstname(String lastname, String firstname) {
+        return medicalRecordRepository.findByLastnameAndFirstname(lastname, firstname);
     }
 
     public Iterable<Medicalrecord> save(List<Medicalrecord> medicalrecords) {

@@ -24,38 +24,39 @@ public class PersonController {
         return personService.savePerson(person);
     }
 
-    @PutMapping("/person/{id}")
-    public Person updatePerson(@PathVariable("id") final Long id, @RequestBody Person person) {
-        Optional<Person> p = personService.getPersonbyId(id);
+    @PutMapping("/person/{lastname}/{firstname}")
+    public Person updatePerson(@PathVariable("lastname") String lastname, @PathVariable("firstname") String firstname, @RequestBody Person person) {
+        Optional<Person> p = personService.getPersonbyLastnameFirstname(lastname, firstname);
         if(p.isPresent()) {
             Person currentPerson = p.get();
 
-            String adress = currentPerson.getAddress();
+            String adress = person.getAddress();
             if(adress != null) {
                 currentPerson.setAddress(adress);
             }
 
-            String city = currentPerson.getCity();
+            String city = person.getCity();
             if(city !=null) {
                 currentPerson.setCity(city);
             }
 
-            String zip = currentPerson.getZip();
+            String zip = person.getZip();
             if(zip != null) {
                 currentPerson.setZip(zip);
             }
 
-            String phone = currentPerson.getPhone();
+            String phone = person.getPhone();
             if(phone != null) {
                 currentPerson.setPhone(phone);
             }
 
-            String email = currentPerson.getEmail();
+            String email = person.getEmail();
             if(email != null) {
                 currentPerson.setEmail(email);
             }
 
-            return currentPerson;
+            return personService.savePerson(currentPerson);
+
         } else {
             return null;
         }

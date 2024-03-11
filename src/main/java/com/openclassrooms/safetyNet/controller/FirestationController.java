@@ -25,22 +25,22 @@ public class FirestationController {
     }
 
     @PutMapping("/firestation/{id}")
-    public Firestation updateFirestation(@PathVariable("id") final Long id, @RequestBody Firestation firestation) {
+    public Firestation updateFirestation(@PathVariable("id") final long id, @RequestBody Firestation firestation) {
         Optional<Firestation> f = firestationService.getFirestationById(id);
         if (f.isPresent()) {
             Firestation currentFirestation = f.get();
 
-            String adress = currentFirestation.getAddress();
+            String adress = firestation.getAddress();
             if(adress != null) {
                 currentFirestation.setAddress(adress);
             }
 
-            Integer station = currentFirestation.getStation();
+            Integer station = firestation.getStation();
             if(station != null) {
                 currentFirestation.setStation(station);
             }
 
-            return currentFirestation;
+            return firestationService.saveFirestation(currentFirestation);
 
         } else {
             return null;

@@ -23,28 +23,28 @@ public class MedicalrecordController {
         return medicalrecordService.saveMedicalrecord(medicalrecord);
     }
 
-    @PutMapping("/medicalrecord/{id}")
-    public Medicalrecord updateMedicalrecord(@PathVariable("id") final Long id, @RequestBody Medicalrecord medicalrecord) {
-        Optional<Medicalrecord> m = medicalrecordService.getMedicalrecordById(id);
+    @PutMapping("/medicalrecord/{lastname}/{firstname}")
+    public Medicalrecord updateMedicalrecord(@PathVariable("lastname") String lastname, @PathVariable("firstname") String firstname, @RequestBody Medicalrecord medicalrecord) {
+        Optional<Medicalrecord> m = medicalrecordService.getMedicalrecordByLastnameFirstname(lastname, firstname);
         if(m.isPresent()) {
             Medicalrecord currentMedicalrecord = m.get();
 
-            Date birthdate = currentMedicalrecord.getBirthdate();
+            Date birthdate = medicalrecord.getBirthdate();
             if(birthdate != null) {
                 currentMedicalrecord.setBirthdate(birthdate);
             }
 
-            List<String> medications = currentMedicalrecord.getMedications();
+            List<String> medications = medicalrecord.getMedications();
             if(medications != null) {
                 currentMedicalrecord.setMedications(medications);
             }
 
-            List<String> allergies = currentMedicalrecord.getAllergies();
+            List<String> allergies = medicalrecord.getAllergies();
             if(allergies != null) {
                 currentMedicalrecord.setAllergies(allergies);
             }
 
-            return currentMedicalrecord;
+            return medicalrecordService.saveMedicalrecord(currentMedicalrecord);
 
         } else {
             return null;
