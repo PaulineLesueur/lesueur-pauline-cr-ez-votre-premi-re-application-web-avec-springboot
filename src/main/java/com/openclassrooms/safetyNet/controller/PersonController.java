@@ -70,4 +70,9 @@ public class PersonController {
         personService.deletePerson(lastname, firstname);
     }
 
+    @GetMapping("/communityEmail")
+    public Iterable<String> getCommunityEmail(@RequestParam("city") String city) {
+        return personService.getCommunityEmail(city);
+    }
+
 }

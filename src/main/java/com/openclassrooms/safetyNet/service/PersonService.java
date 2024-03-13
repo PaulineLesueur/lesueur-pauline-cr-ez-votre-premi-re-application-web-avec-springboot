@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Data
@@ -35,5 +36,9 @@ public class PersonService {
     public Person savePerson(Person person) {
         Person savedPerson = personRepository.save(person);
         return savedPerson;
+    }
+
+    public Iterable<String> getCommunityEmail(String city) {
+        return personRepository.findCommunityEmail(city).orElseThrow(()->new NoSuchElementException("No mail found for this city"));
     }
 }
