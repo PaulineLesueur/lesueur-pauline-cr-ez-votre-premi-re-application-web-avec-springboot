@@ -41,4 +41,8 @@ public class PersonService {
     public Iterable<String> getCommunityEmail(String city) {
         return personRepository.findCommunityEmail(city).orElseThrow(()->new NoSuchElementException("No mail found for this city"));
     }
+
+    public Iterable<String> getPhoneByStationNumber(Integer station) {
+        return personRepository.findPhoneByStationNumber(station).orElseThrow(()->new NoSuchElementException("No phone found for this station"));
+    }
 }

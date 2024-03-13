@@ -75,4 +75,9 @@ public class PersonController {
         return personService.getCommunityEmail(city);
     }
 
+    @GetMapping("/phoneAlert")
+    public Iterable<String> getPhoneByStationNumber(@RequestParam("firestation") Integer station) {
+        return personService.getPhoneByStationNumber(station);
+    }
+
 }
