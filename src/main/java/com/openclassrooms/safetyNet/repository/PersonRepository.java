@@ -22,6 +22,9 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     @Query(value = "SELECT * FROM Persons WHERE last_name = :lastname AND first_name = :firstname", nativeQuery = true)
     Optional<Person> findByLastnameAndFirstname(@Param("lastname") String lastname, @Param("firstname") String firstname);
 
+    @Query(value = "SELECT * FROM Persons p WHERE p.address = :address", nativeQuery = true)
+    Iterable<Person> findByAddress(@Param("address") String address);
+
     @Modifying
     @Query(value = "DELETE FROM Persons WHERE last_name = :lastname AND first_name = :firstname", nativeQuery = true)
     void delete(@Param("lastname") String lastname, @Param("firstname") String firstname);

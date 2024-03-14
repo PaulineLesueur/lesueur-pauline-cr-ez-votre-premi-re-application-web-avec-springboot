@@ -26,6 +26,10 @@ public class PersonService {
         return personRepository.findByLastnameAndFirstname(lastname, firstname);
     }
 
+    public Iterable<Person> getPersonByAddress(String address) {
+        return personRepository.findByAddress(address);
+    }
+
     public void deletePerson(String lastname, String firstname) {
         personRepository.delete(lastname, firstname);
     }

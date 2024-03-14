@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -38,6 +40,44 @@ public class PersonInfoController {
         personInfoDTO.setAllergies(medicalrecord.get().getAllergies());
 
         return personInfoDTO;
+    }
+
+    @GetMapping("/childAlert")
+    public List<PersonInfoDTO> getChildAlert(@RequestParam("address") String address) {
+        Iterable<Person> persons = personService.getPersonByAddress(address);
+        List<PersonInfoDTO> childAlert = new ArrayList<>();
+
+        for (Person person : persons) {
+            PersonInfoDTO child = new PersonInfoDTO();
+            Optional<Medicalrecord> medicalrecord = medicalrecordService.getMedicalrecordByLastnameFirstname(person.getLastName(), person.getFirstName());
+
+            if(ageCalculator.ageCalculator(medicalrecord.get().getBirthdate()) < 18) {
+                child.setFirstName(person.getFirstName());
+                child.setLastName(person.getLastName());
+                child.setAge(ageCalculator.ageCalculator(medicalrecord.get().getBirthdate()));
+                childAlert.add(child);
+            }
+        }
+
+        if(childAlert.isEmpty()) {
+
+            return childAlert;
+
+        } else {
+
+            for(Person person : persons) {
+                PersonInfoDTO adult = new PersonInfoDTO();
+                Optional<Medicalrecord> medicalrecord = medicalrecordService.getMedicalrecordByLastnameFirstname(person.getLastName(), person.getFirstName());
+
+                if(ageCalculator.ageCalculator(medicalrecord.get().getBirthdate()) >= 18) {
+                    adult.setFirstName(person.getFirstName());
+                    adult.setLastName(person.getLastName());
+                    childAlert.add(adult);
+                }
+            }
+
+            return childAlert;
+        }
     }
 
 }

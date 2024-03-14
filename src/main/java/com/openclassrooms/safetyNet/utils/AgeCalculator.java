@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class AgeCalculator {
 
-    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     public int ageCalculator(String birthdate) {
 
         LocalDate birthDate = LocalDate.parse(birthdate, dateTimeFormatter);
