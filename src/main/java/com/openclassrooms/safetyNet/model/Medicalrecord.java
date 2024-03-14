@@ -22,8 +22,7 @@ public class Medicalrecord {
     @Column(name="last_name")
     private String lastName;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private Date birthdate;
+    private String birthdate;
 
     private List<String> medications;
 

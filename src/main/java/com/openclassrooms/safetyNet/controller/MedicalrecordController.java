@@ -30,7 +30,7 @@ public class MedicalrecordController {
         if(m.isPresent()) {
             Medicalrecord currentMedicalrecord = m.get();
 
-            Date birthdate = medicalrecord.getBirthdate();
+            String birthdate = medicalrecord.getBirthdate();
             if(birthdate != null) {
                 currentMedicalrecord.setBirthdate(birthdate);
             }

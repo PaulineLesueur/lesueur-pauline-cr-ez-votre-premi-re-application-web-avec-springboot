@@ -2,6 +2,7 @@ package com.openclassrooms.safetyNet.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 
 @Data
 @Entity
@@ -27,5 +28,7 @@ public class Person {
     private String phone;
 
     private String email;
+
+
 
 }
