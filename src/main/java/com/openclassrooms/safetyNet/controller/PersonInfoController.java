@@ -1,6 +1,7 @@
 package com.openclassrooms.safetyNet.controller;
 
 import com.openclassrooms.safetyNet.DTO.PersonInfoDTO;
+import com.openclassrooms.safetyNet.DTO.PersonsByFirestationDTO;
 import com.openclassrooms.safetyNet.model.Medicalrecord;
 import com.openclassrooms.safetyNet.model.Person;
 import com.openclassrooms.safetyNet.service.MedicalrecordService;
@@ -78,6 +79,34 @@ public class PersonInfoController {
 
             return childAlert;
         }
+    }
+
+    @GetMapping("/firestation")
+    public PersonsByFirestationDTO getPersonByFirestation(@RequestParam("stationNumber") Integer station) {
+        PersonsByFirestationDTO personsByFirestationDTO = new PersonsByFirestationDTO();
+        Iterable<Person> persons = personService.getPersonByStationNumber(station);
+        Integer children = 0;
+        Integer adults = 0;
+
+        for(Person person : persons) {
+            person.setId(null);
+            person.setCity(null);
+            person.setEmail(null);
+            person.setZip(null);
+            Optional<Medicalrecord> medicalrecord = medicalrecordService.getMedicalrecordByLastnameFirstname(person.getLastName(), person.getFirstName());
+
+            if(ageCalculator.ageCalculator(medicalrecord.get().getBirthdate()) < 18) {
+                children++;
+            } else {
+                adults++;
+            }
+        }
+
+        personsByFirestationDTO.setPersonList(persons);
+        personsByFirestationDTO.setNumberOfChildren(children);
+        personsByFirestationDTO.setNumberOfAdults(adults);
+
+        return personsByFirestationDTO;
     }
 
 }

@@ -1,10 +1,12 @@
 package com.openclassrooms.safetyNet.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 @Entity
 @Table(name = "persons")
 public class Person {

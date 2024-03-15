@@ -50,4 +50,8 @@ public class PersonService {
     public Iterable<String> getPhoneByStationNumber(Integer station) {
         return personRepository.findPhoneByStationNumber(station).orElseThrow(()->new NoSuchElementException("No phone found for this station"));
     }
+
+    public Iterable<Person> getPersonByStationNumber(Integer station) {
+        return personRepository.findPersonByStationNumber(station);
+    }
 }
