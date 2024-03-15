@@ -48,18 +48,6 @@ public class FirestationController {
         }
     }
 
-    /*@DeleteMapping("/firestation/{station}")
-    @Transactional
-    public void deleteFirestationByStationNumber(@RequestParam("station") Integer station) {
-        firestationService.deleteFirestationByStationNumber(station);
-    }
-
-    @DeleteMapping("/firestation/{adress}")
-    @Transactional
-    public void deleteFireStationByAdress(@RequestParam("adress") String adress) {
-        firestationService.deleteFireStationByAdress(adress);
-    }*/
-
     @DeleteMapping("/firestation")
     @Transactional
     public void deleteFireStationByAddress(@RequestParam("address") String address) {
