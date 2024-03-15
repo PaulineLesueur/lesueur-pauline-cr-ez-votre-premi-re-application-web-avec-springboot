@@ -14,6 +14,7 @@ public class PersonInfoDTO {
     private String address;
     private Integer age;
     private String email;
+    private String phone;
     private List<String> medications;
     private List<String> allergies;
 

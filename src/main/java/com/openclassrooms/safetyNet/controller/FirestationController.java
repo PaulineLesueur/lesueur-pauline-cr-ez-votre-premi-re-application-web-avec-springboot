@@ -66,9 +66,4 @@ public class FirestationController {
         firestationService.deleteFireStationByAddress(address);
     }
 
-    @GetMapping("/firestation")
-    public Iterable<Person> getPersonByFirestationNumber(@RequestParam("stationNumber") Integer station) {
-        return null;
-    }
-
 }

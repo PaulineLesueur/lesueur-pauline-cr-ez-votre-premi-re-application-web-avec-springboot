@@ -25,6 +25,10 @@ public class FirestationService {
         return fireStationRepository.findById(id);
     }
 
+    public Integer getStationNumberByAddress(String address) {
+        return fireStationRepository.findStationNumberByAddress(address);
+    }
+
     public Iterable<Firestation> save(List<Firestation> firestations) {
         return fireStationRepository.saveAll(firestations);
     }
@@ -33,10 +37,6 @@ public class FirestationService {
         Firestation savedFirestation = fireStationRepository.save(firestation);
         return savedFirestation;
     }
-
-    /*public void deleteFirestationByStationNumber(Integer station) {
-        fireStationRepository.deleteByStationNumber(station);
-    }*/
 
     public void deleteFireStationByAddress(String adress) {
         fireStationRepository.deleteByAddress(adress);

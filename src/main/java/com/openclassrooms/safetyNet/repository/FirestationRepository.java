@@ -17,4 +17,7 @@ public interface FirestationRepository extends CrudRepository<Firestation, Long>
     @Modifying
     @Query(value= "DELETE FROM Firestations WHERE address = :address", nativeQuery = true)
     void deleteByAddress(@Param("address") String address);
+
+    @Query(value = "SELECT f.station FROM Firestations f WHERE f.address = :address", nativeQuery = true)
+    Integer findStationNumberByAddress(@Param("address") String address);
 }
