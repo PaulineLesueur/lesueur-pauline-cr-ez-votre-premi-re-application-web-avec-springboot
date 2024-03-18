@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -21,6 +22,9 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
 
     @Query(value = "SELECT p.* FROM Persons p, Firestations f WHERE f.station = :station and p.address = f.address", nativeQuery = true)
     Iterable<Person> findPersonByStationNumber(@Param("station") Integer station);
+
+    @Query(value = "SELECT p.* FROM Persons p, Firestations f WHERE f.station IN :stations and p.address = f.address", nativeQuery = true)
+    Iterable<Person> findPersonByStationNumberList(@Param("stations") List<Integer> stations);
 
     @Query(value = "SELECT * FROM Persons WHERE last_name = :lastname AND first_name = :firstname", nativeQuery = true)
     Optional<Person> findByLastnameAndFirstname(@Param("lastname") String lastname, @Param("firstname") String firstname);

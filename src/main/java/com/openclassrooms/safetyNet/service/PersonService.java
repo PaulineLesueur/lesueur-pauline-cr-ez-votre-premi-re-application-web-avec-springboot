@@ -54,4 +54,8 @@ public class PersonService {
     public Iterable<Person> getPersonByStationNumber(Integer station) {
         return personRepository.findPersonByStationNumber(station);
     }
+
+    public Iterable<Person> getPersonByStationNumberList(List<Integer> stations) {
+        return personRepository.findPersonByStationNumberList(stations);
+    }
 }

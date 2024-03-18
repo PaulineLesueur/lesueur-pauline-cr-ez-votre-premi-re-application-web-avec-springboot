@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +44,7 @@ public class DisasterController {
             Optional<Medicalrecord> medicalrecord = medicalrecordService.getMedicalrecordByLastnameFirstname(person.getLastName(), person.getFirstName());
 
             personInfoDTO.setLastName(person.getLastName());
+            personInfoDTO.setFirstName(person.getFirstName());
             personInfoDTO.setPhone(person.getPhone());
             personInfoDTO.setAge(ageCalculator.ageCalculator(medicalrecord.get().getBirthdate()));
             personInfoDTO.setMedications(medicalrecord.get().getMedications());
@@ -55,6 +57,38 @@ public class DisasterController {
         fireDTO.setStationNumber(firestationService.getStationNumberByAddress(address));
 
         return fireDTO;
+    }
+
+    @GetMapping("/flood/stations")
+    public List<LinkedHashMap<String, Object>> getPersonByStations(@RequestParam("stations") List<Integer> stations) {
+        List<LinkedHashMap<String, Object>> personInfoDTOList = new ArrayList<>();
+        Iterable<Person> persons = personService.getPersonByStationNumberList(stations);
+
+        for(Person person : persons) {
+            PersonInfoDTO personInfoDTO = new PersonInfoDTO();
+            Optional<Medicalrecord> medicalrecord = medicalrecordService.getMedicalrecordByLastnameFirstname(person.getLastName(), person.getFirstName());
+
+            personInfoDTO.setFirstName(person.getFirstName());
+            personInfoDTO.setLastName(person.getLastName());
+            personInfoDTO.setAddress(person.getAddress());
+            personInfoDTO.setPhone(person.getPhone());
+            personInfoDTO.setAge(ageCalculator.ageCalculator(medicalrecord.get().getBirthdate()));
+            personInfoDTO.setMedications(medicalrecord.get().getMedications());
+            personInfoDTO.setAllergies(medicalrecord.get().getAllergies());
+
+            LinkedHashMap<String, Object> personInfoMap = new LinkedHashMap<>();
+            personInfoMap.put("firstName", personInfoDTO.getFirstName());
+            personInfoMap.put("lastName", personInfoDTO.getLastName());
+            personInfoMap.put("medications", personInfoDTO.getMedications());
+            personInfoMap.put("allergies", personInfoDTO.getAllergies());
+            personInfoMap.put("address", personInfoDTO.getAddress());
+            personInfoMap.put("phone", personInfoDTO.getPhone());
+            personInfoMap.put("age", personInfoDTO.getAge());
+
+            personInfoDTOList.add(personInfoMap);
+        }
+
+        return personInfoDTOList;
     }
 
 }
