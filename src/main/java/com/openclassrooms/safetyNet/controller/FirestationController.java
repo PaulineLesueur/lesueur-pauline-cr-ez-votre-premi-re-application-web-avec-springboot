@@ -15,11 +15,6 @@ public class FirestationController {
     @Autowired
     private FirestationService firestationService;
 
-    @GetMapping("/firestations")
-    public Iterable<Firestation> getFirestations() {
-        return firestationService.getFirestations();
-    }
-
     @PostMapping("/firestation")
     public Firestation createFirestation(Firestation firestation) {
         return firestationService.saveFirestation(firestation);

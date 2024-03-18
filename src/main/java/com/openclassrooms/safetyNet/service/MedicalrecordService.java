@@ -16,10 +16,6 @@ public class MedicalrecordService {
     @Autowired
     private MedicalrecordRepository medicalRecordRepository;
 
-    public Iterable<Medicalrecord> getMedicalrecords() {
-        return medicalRecordRepository.findAll();
-    }
-
     public Optional<Medicalrecord> getMedicalrecordByLastnameFirstname(String lastname, String firstname) {
         return medicalRecordRepository.findByLastnameAndFirstname(lastname, firstname);
     }

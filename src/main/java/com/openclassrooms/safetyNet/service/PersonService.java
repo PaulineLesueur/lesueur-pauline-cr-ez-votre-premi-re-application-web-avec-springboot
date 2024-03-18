@@ -18,10 +18,6 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
-    public Iterable<Person> getPersons() {
-        return personRepository.findAll();
-    }
-
     public Optional<Person> getPersonbyLastnameFirstname(String lastname, String firstname) {
         return personRepository.findByLastnameAndFirstname(lastname, firstname);
     }

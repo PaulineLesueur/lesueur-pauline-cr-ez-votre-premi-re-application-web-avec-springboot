@@ -16,9 +16,6 @@ public class MedicalrecordController {
     @Autowired
     private MedicalrecordService medicalrecordService;
 
-    @GetMapping("/medicalrecords")
-    public Iterable<Medicalrecord> getMedicalrecords() { return medicalrecordService.getMedicalrecords(); }
-
     @PostMapping("/medicalrecord")
     public Medicalrecord createMedicalrecord(@RequestBody Medicalrecord medicalrecord) {
         return medicalrecordService.saveMedicalrecord(medicalrecord);

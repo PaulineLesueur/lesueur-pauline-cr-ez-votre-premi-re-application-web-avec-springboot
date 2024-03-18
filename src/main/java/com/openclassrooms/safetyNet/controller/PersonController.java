@@ -16,11 +16,6 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @GetMapping("/persons")
-    public Iterable<Person> getPersons() {
-        return personService.getPersons();
-    }
-
     @PostMapping("/person")
     public Person createPerson(@RequestBody Person person) {
         return personService.savePerson(person);
