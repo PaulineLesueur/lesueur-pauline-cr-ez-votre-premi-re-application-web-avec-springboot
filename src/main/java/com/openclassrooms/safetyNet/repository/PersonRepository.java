@@ -23,7 +23,7 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     @Query(value = "SELECT p.* FROM Persons p, Firestations f WHERE f.station = :station and p.address = f.address", nativeQuery = true)
     Iterable<Person> findPersonByStationNumber(@Param("station") Integer station);
 
-    @Query(value = "SELECT p.* FROM Persons p, Firestations f WHERE f.station IN :stations and p.address = f.address", nativeQuery = true)
+    @Query(value = "SELECT p.* FROM Persons p, Firestations f WHERE f.station IN :stations and p.address = f.address ORDER BY address", nativeQuery = true)
     Iterable<Person> findPersonByStationNumberList(@Param("stations") List<Integer> stations);
 
     @Query(value = "SELECT * FROM Persons WHERE last_name = :lastname AND first_name = :firstname", nativeQuery = true)
