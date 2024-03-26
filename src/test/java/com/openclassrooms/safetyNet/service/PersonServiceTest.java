@@ -14,8 +14,8 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @WebMvcTest(PersonService.class)
 public class PersonServiceTest {
@@ -58,5 +58,12 @@ public class PersonServiceTest {
         when(personRepository.save(addPerson)).thenReturn(addPerson);
         Person newPerson = personService.savePerson(addPerson);
         assertEquals(addPerson.getFirstName(), newPerson.getFirstName());
+    }
+
+    @Test
+    public void testDeletePerson() {
+        when(personRepository.findByLastnameAndFirstname(any(String.class), any(String.class))).thenReturn(Optional.of(person));
+        personService.deletePerson("Boyd", "John");
+        verify(personRepository, times(1)).delete("Boyd", "John");
     }
 }
