@@ -61,6 +61,15 @@ public class PersonServiceTest {
     }
 
     @Test
+    public void testUpdatePerson() {
+        Person personToUpdate = person;
+        personToUpdate.setCity("NewCity");
+        when(personRepository.save(personToUpdate)).thenReturn(personToUpdate);
+        Person updatedPerson = personService.savePerson(personToUpdate);
+        assertEquals(personToUpdate.getCity(), updatedPerson.getCity());
+    }
+
+    @Test
     public void testDeletePerson() {
         when(personRepository.findByLastnameAndFirstname(any(String.class), any(String.class))).thenReturn(Optional.of(person));
         personService.deletePerson("Boyd", "John");
