@@ -56,4 +56,13 @@ public class FirestationServiceTest {
         assertEquals(addFirestation.getId(), newFirestation.getId());
     }
 
+    @Test
+    public void testUpdateFirestation() {
+        Firestation firestationToUpdate = firestation;
+        firestationToUpdate.setAddress("123 New Address");
+        when(firestationRepository.save(firestationToUpdate)).thenReturn(firestationToUpdate);
+        Firestation updatedFirestation = firestationService.saveFirestation(firestationToUpdate);
+        assertEquals(firestationToUpdate.getAddress(), updatedFirestation.getAddress());
+    }
+
 }
