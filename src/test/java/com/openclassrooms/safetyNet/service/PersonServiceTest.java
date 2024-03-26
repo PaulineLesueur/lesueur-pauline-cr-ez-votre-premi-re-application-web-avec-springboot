@@ -51,4 +51,12 @@ public class PersonServiceTest {
         assertEquals(person.getFirstName(), personFound.get().getFirstName());
     }
 
+
+    @Test
+    public void testCreateNewPerson() {
+        Person addPerson = new Person(2L,"Jacob", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6513", "drk@email.com");
+        when(personRepository.save(addPerson)).thenReturn(addPerson);
+        Person newPerson = personService.savePerson(addPerson);
+        assertEquals(addPerson.getFirstName(), newPerson.getFirstName());
+    }
 }
