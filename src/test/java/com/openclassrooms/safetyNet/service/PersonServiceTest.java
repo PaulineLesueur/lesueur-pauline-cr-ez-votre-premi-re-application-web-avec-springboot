@@ -42,14 +42,6 @@ public class PersonServiceTest {
         listOfPersons.add(new Person(3L,"Tenley", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6514", "tenz@email.com"));
     }
 
-    public static List<String> listOfEmails = new ArrayList<>();
-
-    static {
-        listOfEmails.add("jaboyd@email.com");
-        listOfEmails.add("drk@email.com");
-        listOfEmails.add("tenz@email.com");
-    }
-
     @Test
     public void testGetPersonByLastnameAndFirstname() {
         when(personRepository.findByLastnameAndFirstname(any(String.class), any(String.class))).thenReturn(Optional.of(person));
@@ -91,9 +83,16 @@ public class PersonServiceTest {
 
     @Test
     public void testGetCommunityEmail() {
+        List<String> listOfEmails = new ArrayList<>();
+        listOfEmails.add("jaboyd@email.com");
+        listOfEmails.add("drk@email.com");
+        listOfEmails.add("tenz@email.com");
+
         when(personRepository.findCommunityEmail(any(String.class))).thenReturn(Optional.ofNullable(listOfEmails));
         Iterable<String> emailsFound = personService.getCommunityEmail("Culver");
         assertEquals(listOfEmails, emailsFound);
     }
+
+
 
 }
