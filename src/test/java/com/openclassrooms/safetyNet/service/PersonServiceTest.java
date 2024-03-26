@@ -93,6 +93,16 @@ public class PersonServiceTest {
         assertEquals(listOfEmails, emailsFound);
     }
 
+    @Test
+    public void testGetPhoneByStationNumber() {
+        List<String> listOfPhoneNumbers = new ArrayList<>();
+        listOfPhoneNumbers.add("841-874-6512");
+        listOfPhoneNumbers.add("841-874-6513");
+        listOfPhoneNumbers.add("841-874-6514");
 
+        when(personRepository.findPhoneByStationNumber(any(Integer.class))).thenReturn(Optional.ofNullable(listOfPhoneNumbers));
+        Iterable<String> phoneNumbersFound = personService.getPhoneByStationNumber(2);
+        assertEquals(listOfPhoneNumbers, phoneNumbersFound);
+    }
 
 }
