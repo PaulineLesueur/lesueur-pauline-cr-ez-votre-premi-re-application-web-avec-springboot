@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @WebMvcTest(MedicalrecordService.class)
 public class MedicalrecordServiceTest {
@@ -64,6 +64,13 @@ public class MedicalrecordServiceTest {
         when(medicalrecordRepository.save(medicalrecordToUpdate)).thenReturn(medicalrecordToUpdate);
         Medicalrecord updatedMedicalrecord = medicalrecordService.saveMedicalrecord(medicalrecordToUpdate);
         assertEquals(medicalrecordToUpdate.getAllergies(), updatedMedicalrecord.getAllergies());
+    }
+
+    @Test
+    public void testDeleteMedicalrecord() {
+        when(medicalrecordRepository.findByLastnameAndFirstname(any(String.class), any(String.class))).thenReturn(Optional.of(medicalrecord));
+        medicalrecordRepository.delete("Boyd", "John");
+        verify(medicalrecordRepository, times(1)).delete("Boyd", "John");
     }
 
 }
