@@ -3,7 +3,6 @@ package com.openclassrooms.safetyNet.service;
 import com.openclassrooms.safetyNet.model.Person;
 import com.openclassrooms.safetyNet.repository.PersonRepository;
 import lombok.Data;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,7 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
-    public Optional<Person> getPersonbyLastnameFirstname(String lastname, String firstname) {
+    public Optional<Person> getPersonByLastnameAndFirstname(String lastname, String firstname) {
         return personRepository.findByLastnameAndFirstname(lastname, firstname);
     }
 

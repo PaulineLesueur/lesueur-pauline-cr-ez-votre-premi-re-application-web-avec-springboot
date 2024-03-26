@@ -29,7 +29,7 @@ public class PersonInfoController {
 
     @GetMapping("/personInfo")
     public PersonInfoDTO getPersonInfo(@RequestParam("firstName") String firstname, @RequestParam("lastName") String lastname) {
-        Optional<Person> person = personService.getPersonbyLastnameFirstname(lastname, firstname);
+        Optional<Person> person = personService.getPersonByLastnameAndFirstname(lastname, firstname);
         Optional<Medicalrecord> medicalrecord = medicalrecordService.getMedicalrecordByLastnameFirstname(lastname, firstname);
         PersonInfoDTO personInfoDTO = new PersonInfoDTO();
         personInfoDTO.setFirstName(person.get().getFirstName());

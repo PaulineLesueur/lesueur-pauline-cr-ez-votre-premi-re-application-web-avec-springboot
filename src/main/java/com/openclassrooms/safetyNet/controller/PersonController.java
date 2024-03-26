@@ -4,10 +4,8 @@ import com.openclassrooms.safetyNet.model.Person;
 import com.openclassrooms.safetyNet.service.PersonService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @RestController
@@ -23,7 +21,7 @@ public class PersonController {
 
     @PutMapping("/person/{lastname}/{firstname}")
     public Person updatePerson(@PathVariable("lastname") String lastname, @PathVariable("firstname") String firstname, @RequestBody Person person) {
-        Optional<Person> p = personService.getPersonbyLastnameFirstname(lastname, firstname);
+        Optional<Person> p = personService.getPersonByLastnameAndFirstname(lastname, firstname);
         if(p.isPresent()) {
             Person currentPerson = p.get();
 
