@@ -89,4 +89,11 @@ public class PersonServiceTest {
         assertEquals(listOfPersons, personsFound);
     }
 
+    @Test
+    public void testGetCommunityEmail() {
+        when(personRepository.findCommunityEmail(any(String.class))).thenReturn(Optional.ofNullable(listOfEmails));
+        Iterable<String> emailsFound = personService.getCommunityEmail("Culver");
+        assertEquals(listOfEmails, emailsFound);
+    }
+
 }
