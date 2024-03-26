@@ -1,6 +1,7 @@
 package com.openclassrooms.safetyNet.service;
 
 import com.openclassrooms.safetyNet.model.Medicalrecord;
+import com.openclassrooms.safetyNet.model.Person;
 import com.openclassrooms.safetyNet.repository.MedicalrecordRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,14 @@ public class MedicalrecordServiceTest {
         when(medicalrecordRepository.findByLastnameAndFirstname(any(String.class), any(String.class))).thenReturn(Optional.of(medicalrecord));
         Optional<Medicalrecord> medicalrecordFound = medicalrecordService.getMedicalrecordByLastnameFirstname("John", "Boyd");
         assertEquals(medicalrecord.getFirstName(), medicalrecordFound.get().getFirstName());
+    }
+
+    @Test
+    public void testCreateNewMedicalrecord() {
+        Medicalrecord addMedicalrecord = new Medicalrecord(1L, "John", "Boyd", "03/06/1984", List.of("aznol:350mg", "hydrapermazol:100mg"), List.of("nillacilan"));
+        when(medicalrecordRepository.save(addMedicalrecord)).thenReturn(addMedicalrecord);
+        Medicalrecord newMedicalrecord = medicalrecordService.saveMedicalrecord(addMedicalrecord);
+        assertEquals(addMedicalrecord.getFirstName(), newMedicalrecord.getFirstName());
     }
 
 }
