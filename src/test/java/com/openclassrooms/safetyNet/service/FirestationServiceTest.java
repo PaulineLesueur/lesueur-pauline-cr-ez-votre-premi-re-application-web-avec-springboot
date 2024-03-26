@@ -1,6 +1,7 @@
 package com.openclassrooms.safetyNet.service;
 
 import com.openclassrooms.safetyNet.model.Firestation;
+import com.openclassrooms.safetyNet.model.Person;
 import com.openclassrooms.safetyNet.repository.FirestationRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,12 @@ public class FirestationServiceTest {
         assertEquals(firestation.getId(), firestationFound.get().getId());
     }
 
-
+    @Test
+    public void testCreateNewFirestation() {
+        Firestation addFirestation = new Firestation(2L, "29 15th St", 2);
+        when(firestationRepository.save(addFirestation)).thenReturn(addFirestation);
+        Firestation newFirestation = firestationService.saveFirestation(addFirestation);
+        assertEquals(addFirestation.getId(), newFirestation.getId());
+    }
 
 }
