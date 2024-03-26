@@ -2,6 +2,7 @@ package com.openclassrooms.safetyNet.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Data
 @Entity
+@AllArgsConstructor
 @Table(name = "medicalrecords")
 public class Medicalrecord {
 
