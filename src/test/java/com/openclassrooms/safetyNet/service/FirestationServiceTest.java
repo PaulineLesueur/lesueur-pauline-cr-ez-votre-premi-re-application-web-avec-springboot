@@ -65,4 +65,11 @@ public class FirestationServiceTest {
         assertEquals(firestationToUpdate.getAddress(), updatedFirestation.getAddress());
     }
 
+    @Test
+    public void testGetStationNumberByAddress() {
+        when(firestationRepository.findStationNumberByAddress(any(String.class))).thenReturn(3);
+        Integer stationNumberFound = firestationService.getStationNumberByAddress("1509 Culver St");
+        assertEquals(3, stationNumberFound);
+    }
+
 }
