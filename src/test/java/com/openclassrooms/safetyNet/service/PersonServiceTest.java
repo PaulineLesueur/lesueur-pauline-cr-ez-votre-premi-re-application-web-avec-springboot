@@ -105,4 +105,11 @@ public class PersonServiceTest {
         assertEquals(listOfPhoneNumbers, phoneNumbersFound);
     }
 
+    @Test
+    public void testGetPersonByStationNumber() {
+        when(personRepository.findPersonByStationNumber(any(Integer.class))).thenReturn(listOfPersons);
+        Iterable<Person> personsFound = personService.getPersonByStationNumber(1);
+        assertEquals(listOfPersons, personsFound);
+    }
+
 }
