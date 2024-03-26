@@ -57,4 +57,13 @@ public class MedicalrecordServiceTest {
         assertEquals(addMedicalrecord.getFirstName(), newMedicalrecord.getFirstName());
     }
 
+    @Test
+    public void testUpdateMedicalrecord() {
+        Medicalrecord medicalrecordToUpdate = medicalrecord;
+        medicalrecordToUpdate.setAllergies(List.of("nillacilan", "peanut"));
+        when(medicalrecordRepository.save(medicalrecordToUpdate)).thenReturn(medicalrecordToUpdate);
+        Medicalrecord updatedMedicalrecord = medicalrecordService.saveMedicalrecord(medicalrecordToUpdate);
+        assertEquals(medicalrecordToUpdate.getAllergies(), updatedMedicalrecord.getAllergies());
+    }
+
 }
