@@ -2,7 +2,6 @@ package com.openclassrooms.safetyNet.service;
 
 import com.openclassrooms.safetyNet.model.Person;
 import com.openclassrooms.safetyNet.repository.PersonRepository;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -44,6 +42,14 @@ public class PersonServiceTest {
         listOfPersons.add(new Person(3L,"Tenley", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6514", "tenz@email.com"));
     }
 
+    public static List<String> listOfEmails = new ArrayList<>();
+
+    static {
+        listOfEmails.add("jaboyd@email.com");
+        listOfEmails.add("drk@email.com");
+        listOfEmails.add("tenz@email.com");
+    }
+
     @Test
     public void testGetPersonByLastnameAndFirstname() {
         when(personRepository.findByLastnameAndFirstname(any(String.class), any(String.class))).thenReturn(Optional.of(person));
@@ -75,4 +81,12 @@ public class PersonServiceTest {
         personService.deletePerson("Boyd", "John");
         verify(personRepository, times(1)).delete("Boyd", "John");
     }
+
+    @Test
+    public void testGetPersonByAddress() {
+        when(personRepository.findByAddress(any(String.class))).thenReturn(listOfPersons);
+        Iterable<Person> personsFound = personService.getPersonByAddress("1509 Culver St");
+        assertEquals(listOfPersons, personsFound);
+    }
+
 }
