@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -109,6 +110,14 @@ public class PersonServiceTest {
     public void testGetPersonByStationNumber() {
         when(personRepository.findPersonByStationNumber(any(Integer.class))).thenReturn(listOfPersons);
         Iterable<Person> personsFound = personService.getPersonByStationNumber(1);
+        assertEquals(listOfPersons, personsFound);
+    }
+
+    @Test
+    public void testGetPersonByStationNumberList() {
+        List<Integer> stationsList = Arrays.asList(1, 2, 3);
+        when(personRepository.findPersonByStationNumberList(any(List.class))).thenReturn(listOfPersons);
+        Iterable<Person> personsFound = personService.getPersonByStationNumberList(stationsList);
         assertEquals(listOfPersons, personsFound);
     }
 
