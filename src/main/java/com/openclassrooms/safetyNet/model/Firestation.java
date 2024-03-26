@@ -1,10 +1,12 @@
 package com.openclassrooms.safetyNet.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @Entity
+@AllArgsConstructor
 @Table(name = "firestations")
 public class Firestation {
 
