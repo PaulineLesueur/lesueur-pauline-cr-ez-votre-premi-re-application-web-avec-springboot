@@ -70,7 +70,6 @@ public class PersonServiceTest {
 
     @Test
     public void testDeletePerson() {
-        when(personRepository.findByLastnameAndFirstname(any(String.class), any(String.class))).thenReturn(Optional.of(person));
         personService.deletePerson("Boyd", "John");
         verify(personRepository, times(1)).delete("Boyd", "John");
     }

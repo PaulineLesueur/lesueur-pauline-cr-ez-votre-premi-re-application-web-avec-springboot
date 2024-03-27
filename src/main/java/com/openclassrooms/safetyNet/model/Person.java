@@ -5,11 +5,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "persons")
 public class Person {
 

@@ -68,7 +68,6 @@ public class MedicalrecordServiceTest {
 
     @Test
     public void testDeleteMedicalrecord() {
-        when(medicalrecordRepository.findByLastnameAndFirstname(any(String.class), any(String.class))).thenReturn(Optional.of(medicalrecord));
         medicalrecordRepository.delete("Boyd", "John");
         verify(medicalrecordRepository, times(1)).delete("Boyd", "John");
     }

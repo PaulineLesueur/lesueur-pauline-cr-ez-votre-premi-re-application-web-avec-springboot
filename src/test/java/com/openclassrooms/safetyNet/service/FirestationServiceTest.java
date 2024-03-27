@@ -66,6 +66,12 @@ public class FirestationServiceTest {
     }
 
     @Test
+    public void testDeleteFirestation() {
+        firestationService.deleteFireStationByAddress("1509 Culver St");
+        verify(firestationRepository, times(1)).deleteByAddress("1509 Culver St");
+    }
+
+    @Test
     public void testGetStationNumberByAddress() {
         when(firestationRepository.findStationNumberByAddress(any(String.class))).thenReturn(3);
         Integer stationNumberFound = firestationService.getStationNumberByAddress("1509 Culver St");
