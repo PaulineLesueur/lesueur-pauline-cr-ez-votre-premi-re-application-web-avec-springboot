@@ -8,6 +8,8 @@ import com.openclassrooms.safetyNet.service.MedicalrecordService;
 import com.openclassrooms.safetyNet.service.PersonService;
 import com.openclassrooms.safetyNet.utils.AgeCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,7 +46,7 @@ public class PersonInfoController {
     }
 
     @GetMapping("/childAlert")
-    public List<PersonInfoDTO> getChildAlert(@RequestParam("address") String address) {
+    public ResponseEntity<List<PersonInfoDTO>> getChildAlert(@RequestParam("address") String address) {
         Iterable<Person> persons = personService.getPersonByAddress(address);
         List<PersonInfoDTO> childAlert = new ArrayList<>();
 
@@ -62,7 +64,7 @@ public class PersonInfoController {
 
         if(childAlert.isEmpty()) {
 
-            return childAlert;
+            return ResponseEntity.status(HttpStatus.OK).body(childAlert);
 
         } else {
 
@@ -77,12 +79,12 @@ public class PersonInfoController {
                 }
             }
 
-            return childAlert;
+            return ResponseEntity.status(HttpStatus.OK).body(childAlert);
         }
     }
 
     @GetMapping("/firestation")
-    public PersonsByFirestationDTO getPersonByFirestation(@RequestParam("stationNumber") Integer station) {
+    public ResponseEntity<PersonsByFirestationDTO> getPersonByFirestation(@RequestParam("stationNumber") Integer station) {
         PersonsByFirestationDTO personsByFirestationDTO = new PersonsByFirestationDTO();
         Iterable<Person> persons = personService.getPersonByStationNumber(station);
         Integer children = 0;
@@ -106,7 +108,7 @@ public class PersonInfoController {
         personsByFirestationDTO.setNumberOfChildren(children);
         personsByFirestationDTO.setNumberOfAdults(adults);
 
-        return personsByFirestationDTO;
+        return ResponseEntity.status(HttpStatus.OK).body(personsByFirestationDTO);
     }
 
 }
