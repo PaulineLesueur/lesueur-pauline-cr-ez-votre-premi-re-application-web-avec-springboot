@@ -56,4 +56,10 @@ public class PersonControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    public void testGetPhoneNumberByStation() throws Exception {
+        mockMvc.perform(get("/phoneAlert?firestation=1"))
+                .andExpect(status().isOk());
+    }
+
 }
