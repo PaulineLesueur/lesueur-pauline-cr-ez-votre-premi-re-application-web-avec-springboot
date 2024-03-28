@@ -4,6 +4,8 @@ import com.openclassrooms.safetyNet.model.Medicalrecord;
 import com.openclassrooms.safetyNet.service.MedicalrecordService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -17,12 +19,13 @@ public class MedicalrecordController {
     private MedicalrecordService medicalrecordService;
 
     @PostMapping("/medicalrecord")
-    public Medicalrecord createMedicalrecord(@RequestBody Medicalrecord medicalrecord) {
-        return medicalrecordService.saveMedicalrecord(medicalrecord);
+    public ResponseEntity<Medicalrecord> createMedicalrecord(@RequestBody Medicalrecord medicalrecord) {
+        Medicalrecord createdMedicalrecord = medicalrecordService.saveMedicalrecord(medicalrecord);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdMedicalrecord);
     }
 
     @PutMapping("/medicalrecord/{lastname}/{firstname}")
-    public Medicalrecord updateMedicalrecord(@PathVariable("lastname") String lastname, @PathVariable("firstname") String firstname, @RequestBody Medicalrecord medicalrecord) {
+    public ResponseEntity<?> updateMedicalrecord(@PathVariable("lastname") String lastname, @PathVariable("firstname") String firstname, @RequestBody Medicalrecord medicalrecord) {
         Optional<Medicalrecord> m = medicalrecordService.getMedicalrecordByLastnameFirstname(lastname, firstname);
         if(m.isPresent()) {
             Medicalrecord currentMedicalrecord = m.get();
@@ -42,17 +45,27 @@ public class MedicalrecordController {
                 currentMedicalrecord.setAllergies(allergies);
             }
 
-            return medicalrecordService.saveMedicalrecord(currentMedicalrecord);
+            Medicalrecord updatedMedicalrecord = medicalrecordService.saveMedicalrecord(currentMedicalrecord);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedMedicalrecord);
 
         } else {
-            return null;
+            String notFoundMessage = firstname + " " + lastname + " medicalrecord not found in database";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(notFoundMessage);
         }
     }
 
     @DeleteMapping("/medicalrecord")
     @Transactional
-    public void deleteMedicalrecord(@RequestParam("lastname") String lastname, @RequestParam("firstname") String firstname) {
-        medicalrecordService.deleteMedicalrecord(lastname, firstname);
+    public ResponseEntity<?> deleteMedicalrecord(@RequestParam("lastname") String lastname, @RequestParam("firstname") String firstname) {
+        Optional<Medicalrecord> m = medicalrecordService.getMedicalrecordByLastnameFirstname(lastname, firstname);
+        if(m.isPresent()) {
+            medicalrecordService.deleteMedicalrecord(lastname, firstname);
+            String successMessage = firstname + " " + lastname + " medicalrecord has been deleted successfully";
+            return ResponseEntity.status(HttpStatus.OK).body(successMessage);
+        } else {
+            String notFoundMessage = firstname + " " + lastname + " not found in database";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(notFoundMessage);
+        }
     }
 
 }
