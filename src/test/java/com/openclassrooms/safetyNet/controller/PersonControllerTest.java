@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Optional;
 
 import static javax.swing.UIManager.put;
+import static org.hamcrest.Matchers.empty;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -59,6 +60,16 @@ public class PersonControllerTest {
                     .param("firstname", person.getFirstName()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("John Boyd has been deleted successfully"));
+    }
+
+    @Test
+    public void testDeleteNotFoundPerson() throws Exception {
+        when(personService.getPersonByLastnameAndFirstname(any(String.class), any(String.class))).thenReturn(Optional.empty());
+        mockMvc.perform(delete("/person")
+                    .param("lastname", person.getLastName())
+                    .param("firstname", person.getFirstName()))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("John Boyd not found in database"));
     }
 
     @Test
