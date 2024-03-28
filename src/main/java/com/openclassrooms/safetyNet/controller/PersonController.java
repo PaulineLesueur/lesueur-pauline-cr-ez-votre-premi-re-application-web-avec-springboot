@@ -78,13 +78,13 @@ public class PersonController {
     }
 
     @GetMapping("/communityEmail")
-    public ResponseEntity<?> getCommunityEmail(@RequestParam("city") String city) {
+    public ResponseEntity<Iterable<String>> getCommunityEmail(@RequestParam("city") String city) {
         Iterable<String> communityEmail = personService.getCommunityEmail(city);
         return ResponseEntity.status(HttpStatus.OK).body(communityEmail);
     }
 
     @GetMapping("/phoneAlert")
-    public ResponseEntity<?> getPhoneByStationNumber(@RequestParam("firestation") Integer station) {
+    public ResponseEntity<Iterable<String>> getPhoneByStationNumber(@RequestParam("firestation") Integer station) {
         Iterable<String> phoneNumbers = personService.getPhoneByStationNumber(station);
         return ResponseEntity.status(HttpStatus.OK).body(phoneNumbers);
     }
