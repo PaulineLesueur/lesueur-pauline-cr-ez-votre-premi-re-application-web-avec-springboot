@@ -5,6 +5,8 @@ import com.openclassrooms.safetyNet.model.Person;
 import com.openclassrooms.safetyNet.service.FirestationService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -16,12 +18,13 @@ public class FirestationController {
     private FirestationService firestationService;
 
     @PostMapping("/firestation")
-    public Firestation createFirestation(Firestation firestation) {
-        return firestationService.saveFirestation(firestation);
+    public ResponseEntity<Firestation> createFirestation(Firestation firestation) {
+        Firestation createdFirestation = firestationService.saveFirestation(firestation);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdFirestation);
     }
 
     @PutMapping("/firestation/{id}")
-    public Firestation updateFirestation(@PathVariable("id") final long id, @RequestBody Firestation firestation) {
+    public ResponseEntity<?> updateFirestation(@PathVariable("id") final long id, @RequestBody Firestation firestation) {
         Optional<Firestation> f = firestationService.getFirestationById(id);
         if (f.isPresent()) {
             Firestation currentFirestation = f.get();
@@ -36,10 +39,12 @@ public class FirestationController {
                 currentFirestation.setStation(station);
             }
 
-            return firestationService.saveFirestation(currentFirestation);
+            Firestation updatedFirestation = firestationService.saveFirestation(currentFirestation);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedFirestation);
 
         } else {
-            return null;
+                String notFoundMessage = "firestation not found in database";
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(notFoundMessage);
         }
     }
 
