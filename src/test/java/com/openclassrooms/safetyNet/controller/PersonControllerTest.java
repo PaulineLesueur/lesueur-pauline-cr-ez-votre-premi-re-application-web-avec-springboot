@@ -12,7 +12,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Optional;
+
+import static javax.swing.UIManager.put;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -44,6 +48,12 @@ public class PersonControllerTest {
                 .content(objectMapper.writeValueAsString(person)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstName", is("John")));
+    }
+
+    @Test
+    public void testGetCommunityEmail() throws Exception {
+        mockMvc.perform(get("/communityEmail?city=Culver"))
+                .andExpect(status().isOk());
     }
 
 }
