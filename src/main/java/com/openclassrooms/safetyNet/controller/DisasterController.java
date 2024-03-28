@@ -9,6 +9,8 @@ import com.openclassrooms.safetyNet.service.MedicalrecordService;
 import com.openclassrooms.safetyNet.service.PersonService;
 import com.openclassrooms.safetyNet.utils.AgeCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +36,7 @@ public class DisasterController {
     private AgeCalculator ageCalculator;
 
     @GetMapping("/fire")
-    public FireDTO getPersonByAddress(@RequestParam("address") String address) {
+    public ResponseEntity<FireDTO> getPersonByAddress(@RequestParam("address") String address) {
         FireDTO fireDTO = new FireDTO();
         Iterable<Person> persons = personService.getPersonByAddress(address);
         List<PersonInfoDTO> personInfoDTOList = new ArrayList<>();
@@ -56,11 +58,11 @@ public class DisasterController {
         fireDTO.setPersonInfoDTOList(personInfoDTOList);
         fireDTO.setStationNumber(firestationService.getStationNumberByAddress(address));
 
-        return fireDTO;
+        return ResponseEntity.status(HttpStatus.OK).body(fireDTO);
     }
 
     @GetMapping("/flood/stations")
-    public List<LinkedHashMap<String, Object>> getPersonByStations(@RequestParam("stations") List<Integer> stations) {
+    public ResponseEntity<List<LinkedHashMap<String, Object>>> getPersonByStations(@RequestParam("stations") List<Integer> stations) {
         List<LinkedHashMap<String, Object>> personInfoDTOList = new ArrayList<>();
         Iterable<Person> persons = personService.getPersonByStationNumberList(stations);
 
@@ -88,7 +90,7 @@ public class DisasterController {
             personInfoDTOList.add(personInfoMap);
         }
 
-        return personInfoDTOList;
+        return ResponseEntity.status(HttpStatus.OK).body(personInfoDTOList);
     }
 
 }
